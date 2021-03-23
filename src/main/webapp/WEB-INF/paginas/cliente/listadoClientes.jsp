@@ -1,5 +1,7 @@
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="en_US"/>
 
 
 <section id="clientes">
@@ -25,7 +27,7 @@
                                 <tr>
                                     <td>${cliente.idCliente}</td>
                                     <td>${cliente.nombre} ${cliente.apellido}</td>
-                                    <td>${cliente.saldo}</td>
+                                    <td> <fmt:formatNumber value="${cliente.saldo}" type="currency" />  </td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idCliente=${cliente.idCliente}"
                                            class="btn btn-secondary"><i class="fas fa-angle-double-right"></i>Editar
@@ -38,11 +40,30 @@
                     </table>
                 </div>
             </div>
+
+            <!-- ini Tarjetas de totales -->
+            <div class="col-md-3">
+                <div class="card text-center bg-danger text-white mb-3">
+                    <div class="card-body">
+                        <h3>Saldo Total</h3>
+                        <h4 class="dispaly-4"><%//se comparte desde el servlet %>
+                            <fmt:formatNumber value="${saldoTotal}" type="currency" />
+                        </h4>
+                    </div>
+                </div>
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total Clientes</h3>
+                        <h4 class="display-4">
+                            <i class="fas fa-users"></i> ${totalClientes}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <!-- fin Tarjetas de totales -->
         </div>
     </div>
 </section>
-<ul>
-    <c:forEach var="cliente" items="${clientes}">
-        <li>${cliente.idCliente} ${cliente.nombre} ${cliente.saldo}</li>
-        </c:forEach>
-</ul>
+
+<!-- Agregar cliente MODAL -->
+<jsp:include page="/WEB-INF/paginas/cliente/agregarCliente.jsp"/>
